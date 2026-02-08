@@ -1,10 +1,3 @@
-#Парсування тексту
-
-def parse_input(user_input):
-    cmd, *args = user_input.split()
-    cmd = cmd.strip().lower()
-    return cmd, *args
-
 #Декоратор для обробки помилок при додаванні та зміні контактів
 
 def input_error(func):
@@ -20,6 +13,14 @@ def input_error(func):
 
     return inner
 
+#Парсування тексту
+
+@input_error
+def parse_input(user_input):
+    cmd, *args = user_input.split()
+    cmd = cmd.strip().lower()
+    return cmd, *args
+
 #Додавання контакту
 
 @input_error
@@ -28,7 +29,6 @@ def add_contact(args, contacts):
         contacts[name] = phone
         return "Contact added."
     
-
 #Зміна номеру контакту
 
 @input_error
@@ -38,7 +38,6 @@ def change_contact(args, contacts):
             contacts[name] = phone
             return 'Contact changed.'
         
-
 #Вивід номеру телефону за ім'ям контакту
 
 @input_error
@@ -46,7 +45,6 @@ def show_phone(args, contacts):
         name = args[0]
         if name in contacts:
             return f'Number: {contacts.get(name)}'
-
 
 #Вивід усіх контактів та їх номерів телефонів
 
@@ -61,11 +59,11 @@ def show_all(args, contacts):
 
 def main():
     contacts = {}
-    print("Welcome to the assistant bot!")
+    print("Welcome to the assistant bot!")    
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
-
+        
         if command in ["close", "exit"]:
             print("Good bye!")
             break
@@ -75,12 +73,13 @@ def main():
             print(add_contact(args, contacts))
         elif command == 'change':
             print(change_contact(args, contacts))
-        elif command == 'show':
+        elif command == 'phone':
             print(show_phone(args, contacts))
         elif command == 'all':
             print(show_all(args, contacts))
         else:
             print("Invalid command.")
 
+        
 if __name__ == "__main__":
     main()

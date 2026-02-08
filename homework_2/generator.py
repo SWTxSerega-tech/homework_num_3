@@ -10,13 +10,14 @@ text = '''
 За допомогою генератора generator_numbers розділяємо 
 текст та виводимо числа з крапкою
 '''
-      
+    
 def generator_numbers(text: str):
     for word in text.split():
         word = word.replace(',', '.')
-        if word.replace('.', '').isdigit():
-            yield float(word)
-        
+        if word.count('.') <= 1:
+            if word.replace('.', '').isdigit():
+                yield float(word)
+  
 
 '''
 Функція sum_profit виводить
